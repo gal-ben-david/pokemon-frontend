@@ -1,8 +1,11 @@
 import { useState } from "react"
 import type { Pokemon } from "../interfaces"
 import { Modal } from "./Modal"
+import { PokemonDetails } from "./PokemonDetails"
+import { PokemonPreview } from "./PokemonPreview"
 
-export function PokemonList({ pokemons, visibleCount, title }: { pokemons: Pokemon[], visibleCount: number, title: string }) {
+export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, handleChange }:
+    { pokemons: Pokemon[], visibleCount: number, title: string, isOnlyFavPoke: boolean, handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
 
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null)
 
@@ -14,30 +17,21 @@ export function PokemonList({ pokemons, visibleCount, title }: { pokemons: Pokem
     return (
         <>
             <h1>{title}</h1>
+            <label>
+                <input type="checkbox" onChange={handleChange} checked={isOnlyFavPoke} />
+                Show only Fav Pokémon
+            </label>
+
             <ul className="pokemon-list">
                 {pokemons.slice(0, visibleCount).map(pokemon =>
-
-                    <li key={pokemon.id} onClick={() => setSelectedPokemon(pokemon)}>
-                        <p>{pokemon.name}</p>
-                        {pokemon.isFav && <div className="fav-poke-icon"><img src="/svg/fav-poke.svg"></img></div>}
-                    </li>)}
+                    <PokemonPreview pokemon={pokemon} setSelectedPokemon={setSelectedPokemon} />
+                )}
 
                 {selectedPokemon && (
                     <Modal isOpen={true} onClose={onClose} title={selectedPokemon.name}>
-                        <p>
-                            {selectedPokemon.abilities.map((item, i) => (
-                                <span key={i}>{item.ability.name}</span>
-                            ))}
-                        </p>
-                        <p>
-                            {selectedPokemon.types.map((item, i) => (
-                                <span key={i}>{item.type.name}</span>
-                            ))}
-                        </p>
-                        {selectedPokemon.isFav && <div className="fav-poke-icon" style={{ left: '20px' }}><img src="/svg/fav-poke.svg"></img></div>}
+                        <PokemonDetails selectedPokemon={selectedPokemon} />
                     </Modal>
                 )}
-
             </ul>
         </>
     )

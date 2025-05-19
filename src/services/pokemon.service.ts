@@ -7,7 +7,7 @@ const query = (): Promise<Pokemon[]> => {
     return httpService.get(BASE_URL)
 }
 
-const loadFavList = () => {
+const loadFavList = (): Promise<Pokemon[]> => {
     return httpService.get(BASE_URL + 'favList')
 }
 
