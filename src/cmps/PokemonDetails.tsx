@@ -1,6 +1,6 @@
 import type { Pokemon } from "../interfaces"
 
-export function PokemonDetails({ selectedPokemon }: { selectedPokemon: Pokemon }) {
+export function PokemonDetails({ selectedPokemon, addToFavList }: { selectedPokemon: Pokemon, addToFavList: (pokemonId: number) => Promise<void> }) {
 
     if (!selectedPokemon) return null
 
@@ -16,7 +16,7 @@ export function PokemonDetails({ selectedPokemon }: { selectedPokemon: Pokemon }
                     <span key={i}>{item.type.name}</span>
                 ))}
             </p>
-            {selectedPokemon.isFav ? <button>Remove from Fav list</button> : <button>Add to Fav list</button>}
+            {selectedPokemon.isFav ? <button>Remove from Fav list</button> : <button onClick={() => addToFavList(selectedPokemon.id)}>Add to Fav list</button>}
             {selectedPokemon.isFav && <div className="fav-poke-icon" style={{ left: '20px' }}><img src="/svg/fav-poke.svg"></img></div>}
         </>
     )

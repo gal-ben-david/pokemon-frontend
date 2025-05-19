@@ -9,25 +9,31 @@ export function PokemonIndex() {
     const [visibleCount, setVisibleCount] = useState(14)
     const [isOnlyFavPoke, setIsOnlyFavPoke] = useState(false)
 
-    useEffect(() => {
-        const loadPokemon = async () => {
-            try {
-                const fetchFn = isOnlyFavPoke
-                    ? pokemonService.loadFavList
-                    : pokemonService.query
+    const loadPokemon = async () => {
+        try {
+            const fetchFn = isOnlyFavPoke
+                ? pokemonService.loadFavList
+                : pokemonService.query
 
-                const pokemon = await fetchFn()
-                setPokemons(pokemon)
-                console.log('pokemon', pokemons)
-            } catch (err) {
-                console.error('Cannot load pokemons', err)
-            }
+            const pokemon = await fetchFn()
+            setPokemons(pokemon)
+            console.log('pokemon', pokemons)
+        } catch (err) {
+            console.error('Cannot load pokemons', err)
         }
+    }
+
+    useEffect(() => {
         loadPokemon()
     }, [isOnlyFavPoke])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsOnlyFavPoke(e.target.checked)
+    }
+
+    const addToFavList = async (pokemonId: number) => {
+        const addedPoke = await pokemonService.add(pokemonId)
+        loadPokemon()
     }
 
     return (
@@ -36,7 +42,8 @@ export function PokemonIndex() {
                 pokemons={pokemons}
                 title={'Pokémon List'}
                 handleChange={handleChange}
-                isOnlyFavPoke={isOnlyFavPoke} />
+                isOnlyFavPoke={isOnlyFavPoke}
+                addToFavList={addToFavList} />
 
             {visibleCount < pokemons.length && (
                 <button onClick={() => setVisibleCount(prev => prev + 14)}>Load More</button>
