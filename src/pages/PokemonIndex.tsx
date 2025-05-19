@@ -23,12 +23,8 @@ export function PokemonIndex() {
     }, [])
 
     return (
-        <section>
-            <ul>
-                {pokemons.slice(0, visibleCount).map(poke =>
-                    <PokemonList pokemon={poke} />
-                )}
-            </ul>
+        <section className="pokemon-index">
+            <PokemonList visibleCount={visibleCount} pokemons={pokemons} title={'Pokémon List'} />
 
             {visibleCount < pokemons.length && (
                 <button onClick={() => setVisibleCount(prev => prev + 20)}>Load More</button>

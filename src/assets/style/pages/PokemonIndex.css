@@ -1,0 +1,5 @@
+.pokemon-index {
+    display: grid;
+    justify-items: center;
+    padding-block-end: 1em;
+}

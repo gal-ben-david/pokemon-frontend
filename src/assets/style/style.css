@@ -1,3 +1,7 @@
 @import './basics/base.css';
+@import './basics/layouts.css';
+
+@import './pages/PokemonIndex.css';
 
 @import './cmps/Modal.css';
+@import './cmps/PokemonList.css';

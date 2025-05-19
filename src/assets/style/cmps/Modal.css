@@ -28,6 +28,7 @@
 
 .modal-close {
     position: absolute;
+    padding: .5em;
     top: 8px;
     right: 12px;
     font-size: 1.5rem;
