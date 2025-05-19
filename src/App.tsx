@@ -1,4 +1,3 @@
-import './App.css'
 import { PokemonIndex } from './pages/PokemonIndex'
 
 function App() {

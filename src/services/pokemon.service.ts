@@ -1,7 +1,9 @@
 import { httpService } from "./http.service"
+import type { Pokemon } from "../interfaces"
+
 const BASE_URL = 'pokemon/'
 
-const query = () => {
+const query = (): Promise<Pokemon[]> => {
     return httpService.get(BASE_URL)
 }
 
