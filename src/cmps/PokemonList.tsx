@@ -36,7 +36,7 @@ export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, hand
 
                 {selectedPokemon && (
                     <Modal isOpen={true} onClose={onClose} title={selectedPokemon.name}>
-                        <PokemonDetails selectedPokemon={selectedPokemon} addToFavList={addToFavList} />
+                        <PokemonDetails selectedPokemon={selectedPokemon} addToFavList={addToFavList} onClose={onClose} />
                     </Modal>
                 )}
             </ul>

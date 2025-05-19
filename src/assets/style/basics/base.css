@@ -43,6 +43,13 @@ img {
     width: 100%;
 }
 
+p {
+    &.poke-details {
+        display: flex;
+        gap: .5em;
+    }
+}
+
 button {
     border-radius: 8px;
     border: 1px solid transparent;

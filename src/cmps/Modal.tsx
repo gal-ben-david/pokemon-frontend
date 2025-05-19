@@ -6,7 +6,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal">
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <button className="modal-close" onClick={onClose}>×</button>
                 <div className="modal-container">
                     {title && <h2 className="modal-title">{title}</h2>}

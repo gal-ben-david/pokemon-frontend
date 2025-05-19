@@ -32,7 +32,7 @@ export function PokemonIndex() {
     }
 
     const addToFavList = async (pokemonId: number) => {
-        const addedPoke = await pokemonService.add(pokemonId)
+        await pokemonService.add(pokemonId)
         loadPokemon()
     }
 
