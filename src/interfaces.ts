@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 type Abilities = {
     ability: { name: string, url: string }
     is_hidden: boolean
@@ -14,4 +16,11 @@ export interface Pokemon {
     types: Type[]
     isFav: boolean
     id: number
+}
+
+export interface ModalProps {
+    isOpen: boolean
+    onClose: () => void
+    title?: string
+    children: ReactNode
 }
