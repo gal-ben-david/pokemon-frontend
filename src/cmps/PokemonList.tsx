@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import type { Pokemon } from "../interfaces"
 import { Modal } from "./Modal"
 import { PokemonDetails } from "./PokemonDetails"
 import { PokemonPreview } from "./PokemonPreview"
 
-export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, handleChange, addToFavList }:
+export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, handleChange, addToFavList, removeFromFavList }:
     {
         pokemons: Pokemon[],
         visibleCount: number,
@@ -12,9 +12,16 @@ export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, hand
         isOnlyFavPoke: boolean,
         handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
         addToFavList: (pokemonId: number) => Promise<void>
+        removeFromFavList: (pokemonId: number) => Promise<void>
     }) {
 
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null)
+
+    useEffect(() => {
+        if (!selectedPokemon) return
+        const updatedSelected = pokemons.find(p => p.id === selectedPokemon.id)
+        if (updatedSelected) setSelectedPokemon(updatedSelected)
+    }, [pokemons])
 
     const onClose = (e?: React.MouseEvent) => {
         e?.stopPropagation()
@@ -36,7 +43,7 @@ export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, hand
 
                 {selectedPokemon && (
                     <Modal isOpen={true} onClose={onClose} title={selectedPokemon.name}>
-                        <PokemonDetails selectedPokemon={selectedPokemon} addToFavList={addToFavList} onClose={onClose} />
+                        <PokemonDetails selectedPokemon={selectedPokemon} addToFavList={addToFavList} removeFromFavList={removeFromFavList} />
                     </Modal>
                 )}
             </ul>

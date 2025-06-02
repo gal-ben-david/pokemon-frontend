@@ -16,7 +16,7 @@ const add = (pokemonId: number): Promise<Pokemon> => {
 }
 
 const remove = (pokemonId: number) => {
-    return httpService.delete(BASE_URL + pokemonId, { pokemonId })
+    return httpService.delete(BASE_URL + pokemonId)
 }
 
 export const pokemonService = {

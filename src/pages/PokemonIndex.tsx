@@ -36,6 +36,11 @@ export function PokemonIndex() {
         loadPokemon()
     }
 
+    const removeFromFavList = async (pokemonId: number) => {
+        await pokemonService.remove(pokemonId)
+        loadPokemon()
+    }
+
     return (
         <section className="pokemon-index">
             <PokemonList visibleCount={visibleCount}
@@ -43,7 +48,8 @@ export function PokemonIndex() {
                 title={'Pokémon List'}
                 handleChange={handleChange}
                 isOnlyFavPoke={isOnlyFavPoke}
-                addToFavList={addToFavList} />
+                addToFavList={addToFavList}
+                removeFromFavList={removeFromFavList} />
 
             {visibleCount < pokemons.length && (
                 <button onClick={() => setVisibleCount(prev => prev + 14)}>Load More</button>
