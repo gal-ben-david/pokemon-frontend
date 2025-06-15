@@ -2,11 +2,14 @@ import { useState } from "react"
 import { pokemonService } from "../services/pokemon.service"
 import { PokemonList } from "../cmps/PokemonList"
 import { useQuery } from '@tanstack/react-query'
+import { usePokemonDispatch } from '../context/pokemon.context'
+import { addToFavorites, removeFromFavorites } from '../context/actions/pokemon.actions'
 
 
 export function PokemonIndex() {
     const [visibleCount, setVisibleCount] = useState(14)
     const [isOnlyFavPoke, setIsOnlyFavPoke] = useState(false)
+    const dispatch = usePokemonDispatch()
 
     const { data: pokemons = [], refetch, isLoading, isError, error } = useQuery({
         queryKey: ['pokemons', isOnlyFavPoke],
@@ -22,11 +25,15 @@ export function PokemonIndex() {
 
     const addToFavList = async (pokemonId: number) => {
         await pokemonService.add(pokemonId)
+        dispatch(addToFavorites(pokemonId))
+
         refetch()
     }
 
     const removeFromFavList = async (pokemonId: number) => {
         await pokemonService.remove(pokemonId)
+        dispatch(removeFromFavorites(pokemonId))
+
         refetch()
     }
 
