@@ -50,6 +50,18 @@ p {
     }
 }
 
+input {
+    padding: 1em;
+    border: none;
+    background-color: whitesmoke;
+    border-radius: 2em;
+    margin-block-end: 1em;
+}
+
+input:focus {
+    background-color: #ffffff;
+}
+
 button {
     border-radius: 8px;
     border: 1px solid transparent;

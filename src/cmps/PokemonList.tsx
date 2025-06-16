@@ -21,7 +21,7 @@ export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, hand
         if (!selectedPokemon) return
         const updatedSelected = pokemons.find(p => p.id === selectedPokemon.id)
         if (updatedSelected) setSelectedPokemon(updatedSelected)
-    }, [pokemons])
+    }, [selectedPokemon])
 
     const onClose = (e?: React.MouseEvent) => {
         e?.stopPropagation()
@@ -30,7 +30,6 @@ export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, hand
 
     return (
         <>
-            <h1>{title}</h1>
             <label>
                 <input type="checkbox" onChange={handleChange} checked={isOnlyFavPoke} />
                 Show only Fav Pokémon

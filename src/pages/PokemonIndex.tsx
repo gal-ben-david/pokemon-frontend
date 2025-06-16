@@ -1,14 +1,16 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { pokemonService } from "../services/pokemon.service"
 import { PokemonList } from "../cmps/PokemonList"
 import { useQuery } from '@tanstack/react-query'
 import { usePokemonDispatch } from '../context/pokemon.context'
 import { addToFavorites, removeFromFavorites } from '../context/actions/pokemon.actions'
+import { Search } from '../cmps/Search'
 
 
 export function PokemonIndex() {
     const [visibleCount, setVisibleCount] = useState(14)
     const [isOnlyFavPoke, setIsOnlyFavPoke] = useState(false)
+    const [filterBy, setFilterBy] = useState('')
     const dispatch = usePokemonDispatch()
 
     const { data: pokemons = [], refetch, isLoading, isError, error } = useQuery({
@@ -18,6 +20,12 @@ export function PokemonIndex() {
                 ? pokemonService.loadFavList()
                 : pokemonService.query()
     })
+
+    const filteredPokemons = useMemo(() => {
+        return pokemons.filter(poke =>
+            poke.name.toLowerCase().includes(filterBy.toLowerCase())
+        )
+    }, [filterBy, pokemons])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsOnlyFavPoke(e.target.checked)
@@ -42,15 +50,18 @@ export function PokemonIndex() {
 
     return (
         <section className="pokemon-index">
+            <h1>Pokémon List</h1>
+            <Search filterBy={filterBy} setFilterBy={setFilterBy} />
+
             <PokemonList visibleCount={visibleCount}
-                pokemons={pokemons}
+                pokemons={filteredPokemons}
                 title={'Pokémon List'}
                 handleChange={handleChange}
                 isOnlyFavPoke={isOnlyFavPoke}
                 addToFavList={addToFavList}
                 removeFromFavList={removeFromFavList} />
 
-            {visibleCount < pokemons.length && (
+            {visibleCount < filteredPokemons.length && (
                 <button onClick={() => setVisibleCount(prev => prev + 14)}>Load More</button>
             )}
         </section>

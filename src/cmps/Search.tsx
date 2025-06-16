@@ -1,15 +1,17 @@
-import { useState } from "react"
 
-export function Search() {
-    const [filterBy, setFilterBy] = useState('')
+export function Search({ filterBy, setFilterBy }: { filterBy: string, setFilterBy: (value: string) => void }) {
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name
-        const value = e.target.value
+        let value = e.target.value
         setFilterBy(value)
     }
 
     return (
-        <input type="text" onChange={handleChange} />
+        <input type="text"
+            className="pokemon-name"
+            placeholder="Search by name"
+            value={filterBy}
+            onChange={handleChange} />
     )
 }
