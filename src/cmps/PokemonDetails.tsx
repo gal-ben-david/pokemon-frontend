@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import type { Pokemon } from "../interfaces"
 
 export function PokemonDetails({ selectedPokemon, addToFavList, removeFromFavList }:
@@ -11,10 +11,6 @@ export function PokemonDetails({ selectedPokemon, addToFavList, removeFromFavLis
     if (!selectedPokemon) return null
 
     const [isFav, setIsFav] = useState(selectedPokemon.isFav)
-    useEffect(() => {
-        setIsFav(selectedPokemon.isFav)
-    }
-        , [selectedPokemon])
 
     return (
         <>
@@ -30,8 +26,8 @@ export function PokemonDetails({ selectedPokemon, addToFavList, removeFromFavLis
                     <span key={i}>{item.type.name}</span>
                 ))}
             </p>
-            {isFav ? <button onClick={() => removeFromFavList(selectedPokemon.id)}>Remove from Fav list</button>
-                : <button onClick={() => { addToFavList(selectedPokemon.id) }}>Add to Fav list</button>}
+            {isFav ? <button onClick={() => { removeFromFavList(selectedPokemon.id); setIsFav(false) }}>Remove from Fav list</button>
+                : <button onClick={() => { addToFavList(selectedPokemon.id); setIsFav(true) }}>Add to Fav list</button>}
             {isFav && <div className="fav-poke-icon" style={{ left: '20px' }}><img src="/svg/fav-poke.svg"></img></div>}
         </>
     )

@@ -4,7 +4,7 @@ import { Modal } from "./Modal"
 import { PokemonDetails } from "./PokemonDetails"
 import { PokemonPreview } from "./PokemonPreview"
 
-export function PokemonList({ pokemons, visibleCount, title, isOnlyFavPoke, handleChange, addToFavList, removeFromFavList }:
+export function PokemonList({ pokemons, visibleCount, isOnlyFavPoke, handleChange, addToFavList, removeFromFavList }:
     {
         pokemons: Pokemon[],
         visibleCount: number,

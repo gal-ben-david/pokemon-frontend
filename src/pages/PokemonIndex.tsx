@@ -32,8 +32,8 @@ export function PokemonIndex() {
     }
 
     const addToFavList = async (pokemonId: number) => {
-        await pokemonService.add(pokemonId)
-        dispatch(addToFavorites(pokemonId))
+        const addedPoke = await pokemonService.add(pokemonId)
+        dispatch(addToFavorites(addedPoke.id))
 
         refetch()
     }

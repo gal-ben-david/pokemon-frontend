@@ -1,3 +1,4 @@
+
 export type FavoritesState = {
     favorites: number[]
 }
