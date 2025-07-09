@@ -13,12 +13,17 @@ export function PokemonIndex() {
     const [filterBy, setFilterBy] = useState('')
     const dispatch = usePokemonDispatch()
 
+    // const { data: favPokemons = [], refetch: refetchFav, isLoading: isLoadingFav, isError: isErrorFav, error: errorFav} = useQuery({
+    //     queryKey: ['favPokemons', isOnlyFavPoke],
+    //     enabled: isOnlyFavPoke,
+    //     queryFn: () =>
+    //         pokemonService.loadFavList()
+    // })
+
     const { data: pokemons = [], refetch, isLoading, isError, error } = useQuery({
         queryKey: ['pokemons', isOnlyFavPoke],
         queryFn: () =>
-            isOnlyFavPoke
-                ? pokemonService.loadFavList()
-                : pokemonService.query()
+            pokemonService.query(isOnlyFavPoke)
     })
 
     const filteredPokemons = useMemo(() => {

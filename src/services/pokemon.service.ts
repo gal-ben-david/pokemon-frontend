@@ -1,14 +1,12 @@
 import { httpService } from "./http.service"
 import type { Pokemon } from "../interfaces"
+import axios from "axios"
 
 const BASE_URL = 'pokemon/'
 
-const query = (): Promise<Pokemon[]> => {
-    return httpService.get(BASE_URL)
-}
-
-const loadFavList = (): Promise<Pokemon[]> => {
-    return httpService.get(BASE_URL + 'favList')
+const query = async (isOnlyFavPoke: boolean): Promise<Pokemon[]> => {
+    const res = await axios.get(`http://localhost:3030/api/${BASE_URL}?isOnlyFavPoke=${isOnlyFavPoke}`)
+    return await res.data
 }
 
 const add = (pokemonId: number): Promise<Pokemon> => {
@@ -21,7 +19,6 @@ const remove = (pokemonId: number) => {
 
 export const pokemonService = {
     query,
-    loadFavList,
     add,
     remove
 }
