@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react"
 import type { Pokemon } from "../interfaces"
 
-export function PokemonDetails({ selectedPokemon, addToFavList, onClose }:
-    { selectedPokemon: Pokemon, addToFavList: (pokemonId: number) => Promise<void>, onClose: () => void }) {
+export function PokemonDetails({ selectedPokemon, addToFavList, removeFromFavList }:
+    {
+        selectedPokemon: Pokemon,
+        addToFavList: (pokemonId: number) => Promise<void>,
+        removeFromFavList: (pokemonId: number) => Promise<void>
+    }) {
 
     if (!selectedPokemon) return null
+
+    const [isFav, setIsFav] = useState(selectedPokemon.isFav)
+    useEffect(() => {
+        setIsFav(selectedPokemon.isFav)
+    }
+        , [selectedPokemon])
 
     return (
         <>
@@ -19,9 +30,9 @@ export function PokemonDetails({ selectedPokemon, addToFavList, onClose }:
                     <span key={i}>{item.type.name}</span>
                 ))}
             </p>
-            {selectedPokemon.isFav ? <button>Remove from Fav list</button> : <button onClick={() => { addToFavList(selectedPokemon.id); onClose() }}>Add to Fav list</button>}
-            {selectedPokemon.isFav && <div className="fav-poke-icon" style={{ left: '20px' }}><img src="/svg/fav-poke.svg"></img></div>}
+            {isFav ? <button onClick={() => removeFromFavList(selectedPokemon.id)}>Remove from Fav list</button>
+                : <button onClick={() => { addToFavList(selectedPokemon.id) }}>Add to Fav list</button>}
+            {isFav && <div className="fav-poke-icon" style={{ left: '20px' }}><img src="/svg/fav-poke.svg"></img></div>}
         </>
     )
-
 }
